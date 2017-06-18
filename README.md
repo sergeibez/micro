@@ -1,1 +1,2 @@
-# micro
+# Micro
+Simple spring microservices server
