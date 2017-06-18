@@ -1,0 +1,139 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+group 'com.micro'
+version = '0.0.1'
+
+ext {
+    springCloudVersion = 'Dalston.SR1'
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'org.liquibase.gradle'
+apply plugin: 'org.asciidoctor.gradle.asciidoctor'
+
+repositories {
+	mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    // Spring cloud
+    compile("org.springframework.cloud:spring-cloud-starter-oauth2")
+    compile("org.springframework.cloud:spring-cloud-starter-security")
+    compile("org.springframework.cloud:spring-cloud-starter-eureka")
+
+    // Spring boot
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-cache")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-validation")
+	compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-actuator-docs")
+
+    runtime("org.springframework.boot:spring-boot-devtools")
+    compileOnly("org.springframework.boot:spring-boot-configuration-processor")
+
+    // Database
+    compile("org.hibernate:hibernate-java8")
+	compile("org.liquibase:liquibase-core")
+	runtime("com.h2database:h2")
+	runtime("org.postgresql:postgresql:${postgresqlVersion}")
+
+    // JSON
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+
+    // Utils
+    compile("commons-io:commons-io:2.5")
+    compile("org.apache.commons:commons-lang3:3.5")
+	compileOnly("org.projectlombok:lombok:${lombokVersion}")
+
+    // Test
+	testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test")
+	testCompile("org.springframework.restdocs:spring-restdocs-mockmvc")
+}
+
+jar {
+    dependsOn 'asciidoctorJar'
+
+    from ("${project.buildDir}/libs") {
+        include('micro-auth-docs*.jar')
+        into ('BOOT-INF/lib')
+    }
+
+    rootSpec.exclude("static/asciidoc")
+}
+
+bootRun {
+    systemProperties System.properties
+}
+
+test {
+    group = 'app'
+}
+
+clean {
+    group = 'app'
+}
+
+// Database
+task db_recreate(type: Exec) {
+    group 'app'
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd', '/c', 'db-recreate.cmd'
+    } else {
+        commandLine './db-recreate.sh'
+    }
+}
+
+liquibase {
+    activities {
+        main {
+            changeLogFile "${project.projectDir}/src/main/resources/db/changelog/db.changelog-master.yaml"
+            url 'jdbc:postgresql://localhost:5432/micro_auth'
+            username 'micro'
+            password 'micro1234'
+            classpath "${project.projectDir}/src/main/resources"
+        }
+    }
+}
+
+update {
+    group = 'app'
+}
+
+//  Asciidoctor
+asciidoctor {
+    group 'app'
+
+    attributes = ['snippets': "../../../build/generated-snippets"]
+    inputs.dir "${project.buildDir}/build/generated-snippets"
+    sourceDir = file('src/main/asciidoc')
+    outputs.upToDateWhen { false }
+
+    mustRunAfter test
+
+}.doLast {
+    copy {
+        from "${project.buildDir}/asciidoc/html5"
+        into "${project.buildDir}/resources/main/static/asciidoc"
+    }
+}
+
+task asciidoctorJar(type: Jar) {
+    baseName = 'micro-auth-docs'
+    dependsOn test
+    dependsOn asciidoctor
+    from("${project.buildDir}/asciidoc/html5") {
+        into ("static/asciidoc")
+    }
+}
+
