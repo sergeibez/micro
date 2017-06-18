@@ -1,0 +1,8 @@
+// Generate JKS Java KeyStore
+keytool -genkeypair -alias micro -keyalg RSA -keysize 512 -dname "CN=micro,OU=,O=,L=Karlsruhe,S=BW,C=DE" -keypass micro1234 -keystore micro.jks -storepass micro1234
+
+// Generate certificate
+keytool -export -keystore micro.jks -alias micro -file micro.cer
+
+// Export Public Key. !!! Install openssl (https://indy.fulgan.com/SSL/) at first
+"C:\Program Files\OpenSSL\openssl.exe" x509 -inform der -in micro.cer -pubkey -noout
