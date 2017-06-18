@@ -1,0 +1,29 @@
+= Microservices REST API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[overview]]
+= Overview
+
+[[http-codes-verbs]]
+== HTTP codes and verbs
+
+link:http-codes.html[HTTP codes and verbs] +
+
+[[authorization]]
+== Authorization
+
+With each API call you should set the request headers including an OAuth 2.0 access token.
+
+link:auth-obtain-token.html[Obtain authorization token] +
+
+[[errors]]
+== Errors
+API operation can return multiple errors
+
+link:errors.html[Errors] +
+

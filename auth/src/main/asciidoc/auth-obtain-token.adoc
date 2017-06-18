@@ -1,0 +1,62 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[auth-obtain-token]]
+== Authorization
+
+With each API call you should set the request headers including an OAuth 2.0 access token.
+
+[[auth-obtain-access-token]]
+=== Obtain access token
+
+Call `*POST*` '/oauth/token' obtain an access token. +
+
+==== Request headers
+
+include::{snippets}/auth-obtain-token/request-headers.adoc[]
+
+==== Request parameters
+
+include::{snippets}/auth-obtain-token/request-parameters.adoc[]
+
+==== Response structure
+
+include::{snippets}/auth-obtain-token/response-fields.adoc[]
+
+==== Example request POST
+
+include::{snippets}/auth-obtain-token/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/auth-obtain-token/http-response.adoc[]
+
+
+[[auth-obtain-token-by-refresh]]
+=== Obtain access token by refresh token
+
+Call `*POST*` '/oauth/token' with grant_type 'refresh_token' and 'refresh_token' obtain a new access token.
+
+==== Request headers
+
+include::{snippets}/auth-obtain-token-by-refresh/request-headers.adoc[]
+
+==== Request parameters
+
+include::{snippets}/auth-obtain-token-by-refresh/request-parameters.adoc[]
+
+==== Response structure
+
+include::{snippets}/auth-obtain-token-by-refresh/response-fields.adoc[]
+
+==== Example request POST
+
+include::{snippets}/auth-obtain-token-by-refresh/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/auth-obtain-token-by-refresh/http-response.adoc[]
