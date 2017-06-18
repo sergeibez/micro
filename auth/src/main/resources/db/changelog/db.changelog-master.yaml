@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/2017-06-16-01-databasechangelog.sql
+  - include:
+      file: db/changelog/2017-06-16-10-extensions.sql
+  - include:
+      file: db/changelog/2017-06-17-01-domain.sql
+  - include:
+      file: db/changelog/2017-06-17-10-functions.sql
+  - include:
+      file: db/changelog/2017-06-17-20-user.sql
