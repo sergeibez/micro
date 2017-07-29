@@ -4,6 +4,8 @@ import com.micro.auth.domain.user.User;
 import com.micro.auth.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * Implementation of UserService
  *
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
      * @see com.micro.auth.domain.user.User
      */
     @Override
-    public User findByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -41,7 +43,7 @@ public class UserServiceImpl implements UserService {
      * @see com.micro.auth.domain.user.User
      */
     @Override
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 }

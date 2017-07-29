@@ -2,6 +2,8 @@ package com.micro.auth.service.user.user;
 
 import com.micro.auth.domain.user.User;
 
+import java.util.Optional;
+
 /**
  * Service for {@link User}
  *
@@ -17,7 +19,7 @@ public interface UserService {
      *
      * @see com.micro.auth.domain.user.User
      */
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
     /**
      * Find user by email ignore case sensitive
@@ -28,5 +30,5 @@ public interface UserService {
      *
      * @see com.micro.auth.domain.user.User
      */
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

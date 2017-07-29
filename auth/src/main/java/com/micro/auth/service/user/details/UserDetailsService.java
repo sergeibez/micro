@@ -6,14 +6,12 @@ import com.micro.auth.domain.user.UserRole;
 import com.micro.auth.service.user.group.UserGroupService;
 import com.micro.auth.service.user.user.UserService;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Implementation of spring <code>UserDetailsService</code>
@@ -50,20 +48,16 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(final String username) {
-        User user = userService.findByUsername(username);
-
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("Cannot find User '%s'.", username));
-        }
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("Cannot find User '%s'.", username)));
 
         UserDetails userDetails = conversionService.convert(user, UserDetails.class);
+
         List<UserRole> roles = userGroupService.getGroupRoles(user.getGroup().getId());
-
-        List<GrantedAuthority> authorities = roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
-
-        userDetails.getAuthorities().addAll(authorities);
+        roles.stream()
+                .map(UserRole::getName)
+                .map(SimpleGrantedAuthority::new)
+                .forEach(userDetails.getAuthorities()::add);
 
         return userDetails;
     }

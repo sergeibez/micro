@@ -6,6 +6,8 @@ import com.micro.auth.repository.BaseDataJpaTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -34,35 +36,35 @@ public class UserRepositoryTest extends BaseDataJpaTest {
     public void findByUsernameShouldReturnUserIgnoreCaseSensitive() throws Exception {
         createTestUser();
 
-        assertThat(userRepository.findByUsername("New user").getUsername()).isEqualTo("New user");
-        assertThat(userRepository.findByUsername("New User").getUsername()).isEqualTo("New user");
-        assertThat(userRepository.findByUsername("New USER").getUsername()).isEqualTo("New user");
+        assertThat(userRepository.findByUsername("New user").get().getUsername()).isEqualTo("New user");
+        assertThat(userRepository.findByUsername("New User").get().getUsername()).isEqualTo("New user");
+        assertThat(userRepository.findByUsername("New USER").get().getUsername()).isEqualTo("New user");
     }
 
     @Test
-    public void findByUsernameShouldReturnNullIfCannotFindUser() throws Exception {
+    public void findByUsernameShouldReturnEmptyOptionalIfCannotFindUser() throws Exception {
         createTestUser();
 
-        User user = userRepository.findByUsername("New userrrrrr");
+        Optional<User> user = userRepository.findByUsername("New userrrrrr");
 
-        assertThat(user).isNull();
+        assertThat(user.isPresent()).isFalse();
     }
 
     @Test
     public void findByEmailShouldReturnUserIgnoreCaseSensitive() throws Exception {
         createTestUser();
 
-        assertThat(userRepository.findByEmail("test@email.com").getEmail()).isEqualTo("test@email.com");
-        assertThat(userRepository.findByEmail("test@EMAIL.com").getEmail()).isEqualTo("test@email.com");
-        assertThat(userRepository.findByEmail("test@eMAIL.com").getEmail()).isEqualTo("test@email.com");
+        assertThat(userRepository.findByEmail("test@email.com").get().getEmail()).isEqualTo("test@email.com");
+        assertThat(userRepository.findByEmail("test@EMAIL.com").get().getEmail()).isEqualTo("test@email.com");
+        assertThat(userRepository.findByEmail("test@eMAIL.com").get().getEmail()).isEqualTo("test@email.com");
     }
 
     @Test
-    public void findByEmailShouldReturnNullIfCannotFindUser() throws Exception {
+    public void findByEmailShouldReturnEmptyOptionalIfCannotFindUser() throws Exception {
         createTestUser();
 
-        User user = userRepository.findByEmail("testttttttttt@email.com");
+        Optional<User> user = userRepository.findByEmail("testttttttttt@email.com");
 
-        assertThat(user).isNull();
+        assertThat(user.isPresent()).isFalse();
     }
 }

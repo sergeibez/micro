@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,10 +39,14 @@ public class UserDetailsServiceTest {
                 .role(UserGroupRole.builder().role(admin).build())
                 .build();
 
-        User user = User.builder().id(1L).username("Test User").password("test1234").group(group).build();
+        User user = User.builder()
+                .id(1L).username("Test User")
+                .password("test1234")
+                .group(group)
+                .build();
 
         UserService userService = mock(UserService.class);
-        when(userService.findByUsername("Test User")).thenReturn(user);
+        when(userService.findByUsername("Test User")).thenReturn(Optional.of(user));
         
         UserGroupService userGroupService = mock(UserGroupService.class);
         when(userGroupService.getGroupRoles(1L)).thenReturn(roles);

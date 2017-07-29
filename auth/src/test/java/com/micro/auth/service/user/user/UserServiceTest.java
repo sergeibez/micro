@@ -5,7 +5,10 @@ import com.micro.auth.repository.user.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Optional;
+
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,23 +22,38 @@ public class UserServiceTest {
 
     @Before
     public void setup() {
-        User user = User.builder().id(1L).username("Test User").password("test1234").build();
+        User user = User.builder()
+                .id(1L)
+                .username("Test User")
+                .password("test1234")
+                .email("test@email.com")
+                .build();
 
         UserRepository userRepository = mock(UserRepository.class);
-        when(userRepository.findByUsername("Test User")).thenReturn(user);
-        when(userRepository.findByUsername("Test USER")).thenReturn(user);
+        when(userRepository.findByUsername("Test User")).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername("Test USER")).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername("Unknown USER")).thenReturn(Optional.empty());
+
+        when(userRepository.findByEmail("test@email.com")).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail("Test@Email.CoM")).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail("unknown@email.com")).thenReturn(Optional.empty());
 
         userService = new UserServiceImpl(userRepository);
     }
 
     @Test
     public void findByUsernameShouldFindUserByNameIgnoreCase() throws Exception {
-        assertThat(userService.findByUsername("Test User")).isNotNull();
-        assertThat(userService.findByUsername("Test USER")).isNotNull();
+        assertTrue(userService.findByUsername("Test User").isPresent());
+        assertTrue(userService.findByUsername("Test USER").isPresent());
+
+        assertFalse(userService.findByUsername("Unknown USER").isPresent());
     }
 
     @Test
-    public void findByEmail() throws Exception {
-    }
+    public void findByEmailShouldFindUserByEmailIgnoreCase() throws Exception {
+        assertTrue(userService.findByEmail("test@email.com").isPresent());
+        assertTrue(userService.findByEmail("Test@Email.CoM").isPresent());
 
+        assertFalse(userService.findByEmail("unknown@email.com").isPresent());
+    }
 }
