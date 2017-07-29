@@ -42,7 +42,6 @@ dependencies {
     compileOnly("org.springframework.boot:spring-boot-configuration-processor")
 
     // Database
-    compile("org.hibernate:hibernate-java8")
 	compile("org.liquibase:liquibase-core")
 	runtime("com.h2database:h2")
 	runtime("org.postgresql:postgresql:${postgresqlVersion}")
