@@ -39,7 +39,7 @@ public class UserGroupServiceTest {
     }
 
     @Test
-    public void getGroupRoles() throws Exception {
+    public void getGroupRolesShouldReturnGroupRolesById() throws Exception {
         List<UserRole> roles = userGroupService.getGroupRoles(0L);
 
         assertThat(roles).isNotNull();
