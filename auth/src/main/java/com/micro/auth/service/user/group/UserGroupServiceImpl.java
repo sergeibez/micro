@@ -4,7 +4,6 @@ import com.micro.auth.domain.user.UserGroup;
 import com.micro.auth.domain.user.UserRole;
 import com.micro.auth.repository.user.UserGroupRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +37,8 @@ public class UserGroupServiceImpl implements UserGroupService {
     public List<UserRole> getGroupRoles(long groupId) {
         List<UserRole> roles = new ArrayList<>();
 
-        UserGroup group = userGroupRepository.findOne(groupId);
-
-        Assert.notNull(group, String.format("Cannot find UserGroup by id '%s'", groupId));
+        UserGroup group = userGroupRepository.findById(groupId)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Cannot find UserGroup by id '%s'", groupId)));
 
         group.getRoles().forEach(it -> addRole(roles, it.getRole()));
 

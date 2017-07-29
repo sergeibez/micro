@@ -17,12 +17,12 @@ public class UserGroupRepositoryTest extends BaseDataJpaTest {
     private UserGroupRepository userGroupRepository;
 
     @Test
-    public void getOneShouldReturnUserGroupById() {
-        UserGroup group = userGroupRepository.getOne(0L);
+    public void findByIdShouldReturnUserGroupById() {
+        assertThat(userGroupRepository.findById(0L).isPresent()).isTrue();
+        assertThat(userGroupRepository.findById(0L).get().getId()).isEqualTo(0L);
+        assertThat(userGroupRepository.findById(0L).get().getName()).isEqualTo("");
 
-        assertThat(group).isNotNull();
-        assertThat(group.getId()).isEqualTo(0L);
-        assertThat(group.getName()).isEqualTo("");
+        assertThat(userGroupRepository.findById(-99L).isPresent()).isFalse();
     }
 
     @Test

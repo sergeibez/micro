@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +34,7 @@ public class UserGroupServiceTest {
                 .build();
 
         UserGroupRepository userGroupRepository = mock(UserGroupRepository.class);
-        when(userGroupRepository.findOne(0L)).thenReturn(userGroup);
+        when(userGroupRepository.findById(0L)).thenReturn(Optional.of(userGroup));
         
         userGroupService = new UserGroupServiceImpl(userGroupRepository);
     }
