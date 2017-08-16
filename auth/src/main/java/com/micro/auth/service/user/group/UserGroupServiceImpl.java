@@ -1,6 +1,5 @@
 package com.micro.auth.service.user.group;
 
-import com.micro.auth.domain.user.UserGroup;
 import com.micro.auth.domain.user.UserGroupRole;
 import com.micro.auth.domain.user.UserRole;
 import com.micro.auth.repository.user.UserGroupRepository;
@@ -37,10 +36,9 @@ public class UserGroupServiceImpl implements UserGroupService {
      */
     @Override
     public List<UserRole> getGroupRoles(long groupId) {
-        UserGroup group = userGroupRepository.findById(groupId)
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Cannot find UserGroup by id '%s'", groupId)));
-
-        return group.getRoles().stream()
+        return userGroupRepository.findById(groupId)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Cannot find UserGroup by id '%s'", groupId)))
+                .getRoles().stream()
                 .map(UserGroupRole::getRole)
                 .flatMap(UserRole::getAllRoles)
                 .collect(toList());
