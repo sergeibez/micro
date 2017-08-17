@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.stream.Stream;
 
 /**
  * User role
@@ -41,7 +42,8 @@ public class UserRole implements DomainObject {
     /**
      * Description of the role
      */
-    @Builder.Default private String note = "";
+    @Builder.Default
+    private String note = "";
 
     /**
      * Parent role
@@ -51,4 +53,15 @@ public class UserRole implements DomainObject {
     @ManyToOne
     @PrimaryKeyJoinColumn
     private UserRole parent;
+
+    /**
+     * Return this role and all parents roles
+     * 
+     * @return This role and all parents roles
+     *
+     * @author Sergey Bezvershenko
+     */
+    public Stream<UserRole> getAllRoles() {
+        return parent == null ? Stream.of(this) : Stream.concat(Stream.of(this), parent.getAllRoles());
+    }
 }
