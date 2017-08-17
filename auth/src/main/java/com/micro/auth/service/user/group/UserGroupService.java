@@ -1,6 +1,7 @@
 package com.micro.auth.service.user.group;
 
 import com.micro.auth.domain.user.UserRole;
+import com.micro.auth.exception.ObjectNotFoundException;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface UserGroupService {
      *
      * @return the list of roles
      *
-     * @throws RuntimeException if the group could not be found by ID
+     * @throws ObjectNotFoundException if the group could not be found by ID
 
      * @see com.micro.auth.domain.user.UserRole
      * @see com.micro.auth.domain.user.UserGroup
