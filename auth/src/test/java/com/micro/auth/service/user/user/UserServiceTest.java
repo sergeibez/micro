@@ -3,13 +3,16 @@ package com.micro.auth.service.user.user;
 import com.micro.auth.domain.user.User;
 import com.micro.auth.repository.user.UserRepository;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import java.util.Optional;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -20,6 +23,12 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
     private UserService userService;
 
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+
+    @Mock
+    private UserRepository userRepository;
+
     @Before
     public void setup() {
         User user = User.builder()
@@ -29,7 +38,6 @@ public class UserServiceTest {
                 .email("test@email.com")
                 .build();
 
-        UserRepository userRepository = mock(UserRepository.class);
         when(userRepository.findByUsername("Test User")).thenReturn(Optional.of(user));
         when(userRepository.findByUsername("Test USER")).thenReturn(Optional.of(user));
         when(userRepository.findByUsername("Unknown USER")).thenReturn(Optional.empty());

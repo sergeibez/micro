@@ -5,17 +5,20 @@ import com.micro.auth.domain.user.*;
 import com.micro.auth.service.user.group.UserGroupService;
 import com.micro.auth.service.user.user.UserService;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -25,6 +28,15 @@ import static org.mockito.Mockito.when;
  */
 public class UserDetailsServiceTest {
     private UserDetailsService userDetailsService;
+
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+
+    @Mock
+    private UserService userService;
+
+    @Mock
+    private UserGroupService userGroupService;
 
     @Before
     public void setup() {
@@ -45,10 +57,8 @@ public class UserDetailsServiceTest {
                 .group(group)
                 .build();
 
-        UserService userService = mock(UserService.class);
         when(userService.findByUsername("Test User")).thenReturn(Optional.of(user));
         
-        UserGroupService userGroupService = mock(UserGroupService.class);
         when(userGroupService.getGroupRoles(1L)).thenReturn(roles);
 
         DefaultConversionService conversionService = new DefaultConversionService();
@@ -64,7 +74,7 @@ public class UserDetailsServiceTest {
         assertThat(userDetails).isNotNull();
         assertThat(userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList()))
+                .collect(toList()))
                 .containsExactlyInAnyOrder("ROLE_STAFF", "ROLE_ADMIN");
     }
 }

@@ -5,14 +5,17 @@ import com.micro.auth.domain.user.UserGroupRole;
 import com.micro.auth.domain.user.UserRole;
 import com.micro.auth.repository.user.UserGroupRepository;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -22,6 +25,13 @@ import static org.mockito.Mockito.when;
  */
 public class UserGroupServiceTest {
     private UserGroupService userGroupService;
+
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+
+    @Mock
+    private UserGroupRepository userGroupRepository;
+
 
     @Before
     public void setup() {
@@ -33,7 +43,6 @@ public class UserGroupServiceTest {
                 .role(UserGroupRole.builder().role(admin).build())
                 .build();
 
-        UserGroupRepository userGroupRepository = mock(UserGroupRepository.class);
         when(userGroupRepository.findById(0L)).thenReturn(Optional.of(userGroup));
         
         userGroupService = new UserGroupServiceImpl(userGroupRepository);
@@ -44,7 +53,7 @@ public class UserGroupServiceTest {
         List<UserRole> roles = userGroupService.getGroupRoles(0L);
 
         assertThat(roles).isNotNull();
-        assertThat(roles.stream().map(UserRole::getName).collect(Collectors.toList()))
+        assertThat(roles.stream().map(UserRole::getName).collect(toList()))
                 .containsExactlyInAnyOrder("ROLE_ANONYM", "ROLE_STAFF", "ROLE_ADMIN");
     }
 }
