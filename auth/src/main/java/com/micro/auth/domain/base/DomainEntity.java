@@ -5,7 +5,7 @@ package com.micro.auth.domain.base;
  *
  * @author Sergey Bezvershenko
  */
-public interface DomainObject {
+public interface DomainEntity {
     /**
      * Unique ID
      */
