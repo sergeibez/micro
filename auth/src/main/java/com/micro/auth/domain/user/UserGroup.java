@@ -1,10 +1,10 @@
 package com.micro.auth.domain.user;
 
-import com.micro.auth.domain.base.DomainObject;
-import lombok.*;
+import com.micro.auth.domain.base.DomainEntity;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,13 +16,7 @@ import java.util.List;
  */
 @Entity
 @DynamicUpdate
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-public class UserGroup implements DomainObject {
+public class UserGroup implements DomainEntity {
     /**
      * Unique ID
      */
@@ -44,19 +38,144 @@ public class UserGroup implements DomainObject {
     /**
      * Some notes about group
      */
-    @Builder.Default private String note = "";
+    private String note = "";
 
     /**
      * The users which belong to the group
      */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "group")
     @PrimaryKeyJoinColumn
-    @Singular private List<User> users;
+    private List<User> users;
 
     /**
      * The roles granted to the group
      */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "group")
     @PrimaryKeyJoinColumn
-    @Singular private List<UserGroupRole> roles;
+    private List<UserGroupRole> roles;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public Long getVersion() {
+        return version;
+    }
+
+    @Override
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<UserGroupRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UserGroupRole> roles) {
+        this.roles = roles;
+    }
+
+    /**
+     * Create Builder for UserGroup
+     */
+    public static UserGroupBuilder builder() {
+        return UserGroupBuilder.anUserGroup();
+    }
+
+    /**
+     * Builder for UserGroup
+     */
+
+    public static final class UserGroupBuilder {
+        private Long id;
+        private Long version;
+        private String name;
+        private String note = "";
+        private List<User> users = new ArrayList<>();
+        private List<UserGroupRole> roles = new ArrayList<>();
+
+        private UserGroupBuilder() {
+        }
+
+        public static UserGroupBuilder anUserGroup() {
+            return new UserGroupBuilder();
+        }
+
+        public UserGroupBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserGroupBuilder version(Long version) {
+            this.version = version;
+            return this;
+        }
+
+        public UserGroupBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public UserGroupBuilder note(String note) {
+            this.note = note;
+            return this;
+        }
+
+        public UserGroupBuilder users(List<User> users) {
+            this.users = users;
+            return this;
+        }
+
+        public UserGroupBuilder roles(List<UserGroupRole> roles) {
+            this.roles = roles;
+            return this;
+        }
+
+        public UserGroupBuilder role(UserGroupRole role) {
+            this.roles.add(role);
+            return this;
+        }
+
+        public UserGroup build() {
+            UserGroup userGroup = new UserGroup();
+            userGroup.setId(id);
+            userGroup.setVersion(version);
+            userGroup.setName(name);
+            userGroup.setNote(note);
+            userGroup.setUsers(users);
+            userGroup.setRoles(roles);
+            return userGroup;
+        }
+    }
 }

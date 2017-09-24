@@ -1,7 +1,6 @@
 package com.micro.auth.domain.user;
 
-import com.micro.auth.domain.base.DomainObject;
-import lombok.*;
+import com.micro.auth.domain.base.DomainEntity;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -13,12 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @DynamicUpdate
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserGroupRole implements DomainObject {
+public class UserGroupRole implements DomainEntity {
     /**
      * Unique ID
      */
@@ -49,5 +43,109 @@ public class UserGroupRole implements DomainObject {
     /**
      * Some notes for the linkage
      */
-    @Builder.Default private String note = "";
+    private String note = "";
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public Long getVersion() {
+        return version;
+    }
+
+    @Override
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public UserGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(UserGroup group) {
+        this.group = group;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    /**
+     * Create Builder for UserGroupRole
+     */
+    public static UserGroupRoleBuilder builder() {
+        return UserGroupRoleBuilder.anUserGroupRole();
+    }
+
+    /**
+     * Builder for UserGroupRole
+     */
+    public static final class UserGroupRoleBuilder {
+        private Long id;
+        private Long version;
+        private UserGroup group;
+        private UserRole role;
+        private String note = "";
+
+        private UserGroupRoleBuilder() {
+        }
+
+        public static UserGroupRoleBuilder anUserGroupRole() {
+            return new UserGroupRoleBuilder();
+        }
+
+        public UserGroupRoleBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserGroupRoleBuilder version(Long version) {
+            this.version = version;
+            return this;
+        }
+
+        public UserGroupRoleBuilder group(UserGroup group) {
+            this.group = group;
+            return this;
+        }
+
+        public UserGroupRoleBuilder role(UserRole role) {
+            this.role = role;
+            return this;
+        }
+
+        public UserGroupRoleBuilder note(String note) {
+            this.note = note;
+            return this;
+        }
+
+        public UserGroupRole build() {
+            UserGroupRole userGroupRole = new UserGroupRole();
+            userGroupRole.setId(id);
+            userGroupRole.setVersion(version);
+            userGroupRole.setGroup(group);
+            userGroupRole.setRole(role);
+            userGroupRole.setNote(note);
+            return userGroupRole;
+        }
+    }
 }

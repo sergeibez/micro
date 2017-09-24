@@ -52,7 +52,6 @@ dependencies {
     // Utils
     compile("commons-io:commons-io:2.5")
     compile("org.apache.commons:commons-lang3:3.5")
-	compileOnly("org.projectlombok:lombok:${lombokVersion}")
 
     // Test
 	testCompile("org.springframework.boot:spring-boot-starter-test")
