@@ -1,0 +1,65 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[http-status-codes]]
+== HTTP status codes
+
+|===
+| Status code | Status name | Usage
+
+| `200`
+| `OK`
+| The request completed successfully
+
+| `201`
+| `Created`
+| A new resource has been created successfully. The resource's URI is available from the response's
+`Location` header
+
+| `204`
+| `No Content`
+| An update to an existing resource has been applied successfully
+
+| `400`
+| `Bad Request`
+| The request was malformed. The response body will include an error providing further information
+
+| `401`
+| `Unauthorized`
+| Unauthorized request
+
+| `403`
+| `Forbidden`
+| The server understood the request but refuses to authorize it
+
+| `404`
+| `Not Found`
+| The requested resource did not exist
+
+| `500`
+| `Internal Server Error`
+| The server encountered an unexpected condition that prevented it from fulfilling the request.
+|===
+
+[[http-verbs]]
+== HTTP verbs
+
+|===
+| Verb | Usage
+
+| `GET`
+| Used to retrieve a resource
+
+| `POST`
+| Used to create a new resource
+
+| `PUT`
+| Used to update an existing resource
+
+| `DELETE`
+| Used to delete an existing resource
+|===

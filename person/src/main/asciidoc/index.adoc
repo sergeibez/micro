@@ -1,0 +1,23 @@
+= Microservices REST API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[overview]]
+= Overview
+Service for work with personal information
+
+[[http-codes-verbs]]
+== HTTP codes and verbs
+
+link:http-codes.html[HTTP codes and verbs] +
+
+[[errors]]
+== Errors
+API operation can return multiple errors
+
+link:errors.html[Errors] +
+
