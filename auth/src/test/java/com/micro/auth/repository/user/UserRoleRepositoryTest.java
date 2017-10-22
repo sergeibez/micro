@@ -18,7 +18,7 @@ public class UserRoleRepositoryTest extends BaseDataJpaTest{
 
     @Test
     public void findOneShouldReturnUserRoleById() {
-        UserRole role = userRoleRepository.findOne(0L);
+        UserRole role = userRoleRepository.getOne(0L);
 
         assertThat(role).isNotNull();
         assertThat(role.getId()).isEqualTo(0L);
@@ -28,7 +28,7 @@ public class UserRoleRepositoryTest extends BaseDataJpaTest{
     @Test
     public void saveShouldStoreNewRoleToDatabase() {
         //  create a new role with the parent role "IS_AUTHENTICATED_ANONYMOUSLY"
-        UserRole parent = userRoleRepository.findOne(0L);
+        UserRole parent = userRoleRepository.getOne(0L);
         UserRole newRole = UserRole.builder().name("ROLE_MANAGER").parent(parent).note("Managers").build();
 
         //  save
@@ -37,7 +37,7 @@ public class UserRoleRepositoryTest extends BaseDataJpaTest{
         entityManager.clear();
 
         //  reload from db
-        UserRole role = userRoleRepository.findOne(newRole.getId());
+        UserRole role = userRoleRepository.getOne(newRole.getId());
 
         // check
         assertThat(role).isNotNull();

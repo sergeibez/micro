@@ -53,7 +53,7 @@ public class UserGroupRoleRepositoryTest extends BaseDataJpaTest {
         entityManager.clear();
 
         //  reload from db
-        UserGroupRole groupRole = userGroupRoleRepository.findOne(newId);
+        UserGroupRole groupRole = userGroupRoleRepository.getOne(newId);
 
         // check
         assertThat(groupRole).isNotNull();
