@@ -39,3 +39,19 @@ task wrapper(type: Wrapper) {
 ext['logback.version'] = "${logbackVersion}"
 ext['slf4j.version'] = "${orgSlf4jVersion}"
 ext['hibernate.version'] = "${hibernateVersion}"
+
+task cleanAll {
+    group = 'app'
+    description = "Clean all '/build' and '/out' folders"
+    subprojects.each { project ->
+        project.afterEvaluate {
+            def cleanTask = project.tasks.findByName('clean')
+            if (cleanTask) {
+                dependsOn(cleanTask)
+                cleanTask.doFirst {
+                    delete "${project.projectDir}/out"
+                }
+            }
+        }
+    }
+}
