@@ -39,12 +39,8 @@ dependencies {
     runtime("com.h2database:h2")
     runtime("org.postgresql:postgresql:${postgresqlVersion}")
 
-    // JSON
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
-
     // Utils
-    compile("commons-io:commons-io:2.5")
-    compile("org.apache.commons:commons-lang3:3.5")
+    compile("org.apache.commons:commons-lang3")
 
     // Test
     testCompile("org.springframework.boot:spring-boot-starter-test")

@@ -36,10 +36,6 @@ task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
 
-ext['logback.version'] = "${logbackVersion}"
-ext['slf4j.version'] = "${orgSlf4jVersion}"
-ext['hibernate.version'] = "${hibernateVersion}"
-
 task cleanAll {
     group = 'app'
     description = "Clean all '/build' and '/out' folders"
