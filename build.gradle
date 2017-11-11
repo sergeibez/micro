@@ -27,9 +27,6 @@ subprojects { project ->
         maven { url "https://repo.spring.io/libs-milestone" }
         maven { url "https://repo.spring.io/milestone" }
     }
-
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
 }
 
 task wrapper(type: Wrapper) {
