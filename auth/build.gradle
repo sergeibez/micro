@@ -43,6 +43,10 @@ dependencies {
     compile("org.apache.commons:commons-lang3")
 
     // Test
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.2")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.2")
+    testCompile("org.junit.platform:junit-platform-runner:1.0.2")
+    
 	testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
 	testCompile("org.springframework.restdocs:spring-restdocs-mockmvc")
