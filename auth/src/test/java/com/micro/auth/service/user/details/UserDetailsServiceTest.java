@@ -4,12 +4,9 @@ import com.micro.auth.converter.user.UserDetailsConverter;
 import com.micro.auth.domain.user.*;
 import com.micro.auth.service.user.group.UserGroupService;
 import com.micro.auth.service.user.user.UserService;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -20,17 +17,15 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Test for {@link UserDetailsService}
  *
  * @author Sergey Bezvershenko
  */
-public class UserDetailsServiceTest {
+class UserDetailsServiceTest {
     private UserDetailsService userDetailsService;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private UserService userService;
@@ -38,8 +33,10 @@ public class UserDetailsServiceTest {
     @Mock
     private UserGroupService userGroupService;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void setup() {
+        initMocks(this);
+
         UserRole staff = UserRole.builder().name("ROLE_STAFF").build();
         UserRole admin = UserRole.builder().name("ROLE_ADMIN").parent(staff).build();
 
@@ -68,7 +65,7 @@ public class UserDetailsServiceTest {
     }
 
     @Test
-    public void loadUserByUsername() throws Exception {
+    void loadUserByUsername() throws Exception {
         UserDetails userDetails = userDetailsService.loadUserByUsername("Test User");
 
         assertThat(userDetails).isNotNull();

@@ -2,7 +2,7 @@ package com.micro.auth.repository.user;
 
 import com.micro.auth.domain.user.UserRole;
 import com.micro.auth.repository.BaseDataJpaTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,12 +12,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Sergey Bezvershenko
  */
-public class UserRoleRepositoryTest extends BaseDataJpaTest{
+class UserRoleRepositoryTest extends BaseDataJpaTest{
     @Autowired
     private UserRoleRepository userRoleRepository;
 
     @Test
-    public void findOneShouldReturnUserRoleById() {
+    void findOneShouldReturnUserRoleById() {
         UserRole role = userRoleRepository.getOne(0L);
 
         assertThat(role).isNotNull();
@@ -26,7 +26,7 @@ public class UserRoleRepositoryTest extends BaseDataJpaTest{
     }
 
     @Test
-    public void saveShouldStoreNewRoleToDatabase() {
+    void saveShouldStoreNewRoleToDatabase() {
         //  create a new role with the parent role "IS_AUTHENTICATED_ANONYMOUSLY"
         UserRole parent = userRoleRepository.getOne(0L);
         UserRole newRole = UserRole.builder().name("ROLE_MANAGER").parent(parent).note("Managers").build();

@@ -4,12 +4,9 @@ import com.micro.auth.domain.user.UserGroup;
 import com.micro.auth.domain.user.UserGroupRole;
 import com.micro.auth.domain.user.UserRole;
 import com.micro.auth.repository.user.UserGroupRepository;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,24 +14,23 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Test for {@link UserGroupService}
  *
  * @author Sergey Bezvershenko
  */
-public class UserGroupServiceTest {
+class UserGroupServiceTest {
     private UserGroupService userGroupService;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private UserGroupRepository userGroupRepository;
 
+    @BeforeEach
+    void setup() {
+        initMocks(this);
 
-    @Before
-    public void setup() {
         UserRole anonym = UserRole.builder().name("ROLE_ANONYM").build();
         UserRole staff = UserRole.builder().name("ROLE_STAFF").parent(anonym).build();
         UserRole admin = UserRole.builder().name("ROLE_ADMIN").parent(staff).build();
@@ -49,7 +45,7 @@ public class UserGroupServiceTest {
     }
 
     @Test
-    public void getGroupRolesShouldReturnGroupRolesById() throws Exception {
+    void getGroupRolesShouldReturnGroupRolesById() throws Exception {
         List<UserRole> roles = userGroupService.getGroupRoles(0L);
 
         assertThat(roles).isNotNull();

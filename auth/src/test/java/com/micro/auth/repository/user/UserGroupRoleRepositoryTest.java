@@ -4,7 +4,7 @@ import com.micro.auth.domain.user.UserGroup;
 import com.micro.auth.domain.user.UserGroupRole;
 import com.micro.auth.domain.user.UserRole;
 import com.micro.auth.repository.BaseDataJpaTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Sergey Bezvershenko
  */
-public class UserGroupRoleRepositoryTest extends BaseDataJpaTest {
+class UserGroupRoleRepositoryTest extends BaseDataJpaTest {
     @Autowired
     private UserGroupRoleRepository userGroupRoleRepository;
 
@@ -25,7 +25,7 @@ public class UserGroupRoleRepositoryTest extends BaseDataJpaTest {
     private UserRoleRepository userRoleRepository;
 
     @Test
-    public void getOneShouldReturnUserGroupRoleById() {
+    void getOneShouldReturnUserGroupRoleById() {
         UserGroupRole groupRole = userGroupRoleRepository.getOne(1L);
 
         assertThat(groupRole).isNotNull();
@@ -39,7 +39,7 @@ public class UserGroupRoleRepositoryTest extends BaseDataJpaTest {
     }
 
     @Test
-    public void saveShouldStoreNewLinkageBetweenUserGroupAndRoleToDatabase() {
+    void saveShouldStoreNewLinkageBetweenUserGroupAndRoleToDatabase() {
         //  create a new linkage between group and role
         UserGroup group = userGroupRepository.getOne(1L);
         UserRole newRole = UserRole.builder().name("ROLE_MANAGER").note("Managers").build();

@@ -3,7 +3,7 @@ package com.micro.auth.repository.user;
 import com.micro.auth.domain.user.User;
 import com.micro.auth.domain.user.UserGroup;
 import com.micro.auth.repository.BaseDataJpaTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Sergey Bezvershenko
  */
-public class UserRepositoryTest extends BaseDataJpaTest {
+class UserRepositoryTest extends BaseDataJpaTest {
     @Autowired
     private UserRepository userRepository;
 
@@ -33,7 +33,7 @@ public class UserRepositoryTest extends BaseDataJpaTest {
     }
 
     @Test
-    public void findByUsernameShouldReturnUserIgnoreCaseSensitive() throws Exception {
+    void findByUsernameShouldReturnUserIgnoreCaseSensitive() throws Exception {
         createTestUser();
 
         assertThat(userRepository.findByUsername("New user").get().getUsername()).isEqualTo("New user");
@@ -42,7 +42,7 @@ public class UserRepositoryTest extends BaseDataJpaTest {
     }
 
     @Test
-    public void findByUsernameShouldReturnEmptyOptionalIfCannotFindUser() throws Exception {
+    void findByUsernameShouldReturnEmptyOptionalIfCannotFindUser() throws Exception {
         createTestUser();
 
         Optional<User> user = userRepository.findByUsername("New userrrrrr");
@@ -51,7 +51,7 @@ public class UserRepositoryTest extends BaseDataJpaTest {
     }
 
     @Test
-    public void findByEmailShouldReturnUserIgnoreCaseSensitive() throws Exception {
+    void findByEmailShouldReturnUserIgnoreCaseSensitive() throws Exception {
         createTestUser();
 
         assertThat(userRepository.findByEmail("test@email.com").get().getEmail()).isEqualTo("test@email.com");
@@ -60,7 +60,7 @@ public class UserRepositoryTest extends BaseDataJpaTest {
     }
 
     @Test
-    public void findByEmailShouldReturnEmptyOptionalIfCannotFindUser() throws Exception {
+    void findByEmailShouldReturnEmptyOptionalIfCannotFindUser() throws Exception {
         createTestUser();
 
         Optional<User> user = userRepository.findByEmail("testttttttttt@email.com");

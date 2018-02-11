@@ -1,9 +1,9 @@
 package com.micro.auth;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Test for loading of spring context
@@ -11,9 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author Sergey Bezvershenko
  */
 @SpringBootTest
-@RunWith(SpringRunner.class)
-public class AuthApplicationTests {
+@ExtendWith(SpringExtension.class)
+class AuthApplicationTests {
 	@Test
-	public void contextLoads() {
+	void contextLoads() {
 	}
 }

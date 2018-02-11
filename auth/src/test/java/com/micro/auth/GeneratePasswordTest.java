@@ -1,6 +1,6 @@
 package com.micro.auth;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
@@ -8,11 +8,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  *
  * @author Sergey Bezvershenko
  */
-public class GeneratePasswordTest {
+class GeneratePasswordTest {
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Test
-    public void generatePassword() {
+    void generatePassword() {
         String password = "password1234";
         System.out.println(passwordEncoder.encode(password));
     }

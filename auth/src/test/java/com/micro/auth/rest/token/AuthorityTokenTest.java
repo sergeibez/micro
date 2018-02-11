@@ -1,7 +1,7 @@
 package com.micro.auth.rest.token;
 
 import com.micro.auth.rest.BaseRestTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Sergey Bezvershenko
  */
-public class AuthorityTokenTest extends BaseRestTest {
+class AuthorityTokenTest extends BaseRestTest {
     private ResultActions obtainTokenResult(String docName, String grantType, Map<String, String> extraParams) throws Exception {
         String clientId = "micro";
         String clientSecret = "micro1234";
@@ -102,12 +102,12 @@ public class AuthorityTokenTest extends BaseRestTest {
     }
 
     @Test
-    public void testObtainAccessToken() throws Exception {
+    void testObtainAccessToken() throws Exception {
         obtainTokenResult("auth-obtain-token", "password", null);
     }
 
     @Test
-    public void testObtainAccessTokenByRefreshToken() throws Exception {
+    void testObtainAccessTokenByRefreshToken() throws Exception {
         String refreshToken = obtainRefreshToken();
 
         Map<String, String> params = new LinkedHashMap<>();

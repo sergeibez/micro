@@ -2,35 +2,32 @@ package com.micro.auth.service.user.user;
 
 import com.micro.auth.domain.user.User;
 import com.micro.auth.repository.user.UserRepository;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 
 import java.util.Optional;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Test for {@link UserService}
  *
  * @author Sergey Bezvershenko
  */
-public class UserServiceTest {
+class UserServiceTest {
     private UserService userService;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private UserRepository userRepository;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void setup() {
+        initMocks(this);
+
         User user = User.builder()
                 .id(1L)
                 .username("Test User")
@@ -50,7 +47,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void findByUsernameShouldFindUserByNameIgnoreCase() throws Exception {
+    void findByUsernameShouldFindUserByNameIgnoreCase() throws Exception {
         assertTrue(userService.findByUsername("Test User").isPresent());
         assertTrue(userService.findByUsername("Test USER").isPresent());
 
@@ -58,7 +55,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void findByEmailShouldFindUserByEmailIgnoreCase() throws Exception {
+    void findByEmailShouldFindUserByEmailIgnoreCase() throws Exception {
         assertTrue(userService.findByEmail("test@email.com").isPresent());
         assertTrue(userService.findByEmail("Test@Email.CoM").isPresent());
 
