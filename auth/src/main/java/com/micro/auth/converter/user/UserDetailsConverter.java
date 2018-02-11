@@ -28,7 +28,7 @@ public class UserDetailsConverter implements Converter<User, UserDetails> {
         return UserDetails.builder()
                 .id(user.getId())
                 .username(user.getUsername())
-                .password(user.getPassword())
+                .password("{bcrypt}" + user.getPassword())
                 .email(user.getEmail())
 
                 .enabled(user.isEnabled())
