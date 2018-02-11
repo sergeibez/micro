@@ -12,15 +12,16 @@ apply plugin: 'org.asciidoctor.gradle.asciidoctor'
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+//        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 
 dependencies {
     // Spring cloud
-    compile("org.springframework.cloud:spring-cloud-starter-oauth2")
-    compile("org.springframework.cloud:spring-cloud-starter-security")
-    compile("org.springframework.cloud:spring-cloud-starter-eureka")
+//    compile("org.springframework.cloud:spring-cloud-starter-oauth2")
+//    compile("org.springframework.cloud:spring-cloud-starter-security")
+//    compile("org.springframework.cloud:spring-cloud-starter-config")
+//    compile("org.springframework.cloud:spring-cloud-starter-eureka:2.0.0.M2")
 
     // Spring boot
     compile("org.springframework.boot:spring-boot-starter-web")
@@ -28,21 +29,24 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-cache")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-validation")
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-    compile("org.springframework.boot:spring-boot-actuator-docs")
+    //compile("org.springframework.boot:spring-boot-starter-actuator")
+    //compile("org.springframework.boot:spring-boot-actuator-docs")
 
     //runtime("org.springframework.boot:spring-boot-devtools")
     compileOnly("org.springframework.boot:spring-boot-configuration-processor")
 
     // Database
     compile("org.liquibase:liquibase-core")
-    runtime("com.h2database:h2")
     runtime("org.postgresql:postgresql:${postgresqlVersion}")
 
     // Utils
     compile("org.apache.commons:commons-lang3")
 
     // Test
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junit5Version}")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:${junit5Version}")
+    testCompile("org.junit.platform:junit-platform-runner:${junit5RunnerVersion}")
+
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
     testCompile("org.springframework.restdocs:spring-restdocs-mockmvc")
