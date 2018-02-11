@@ -1,0 +1,6 @@
+GET http://localhost:8081/oauth/token?grant_type=password&client_id=micro&client_secret=micro1234&username=admin&password=admin1234
+Content-Type: application/json
+Accept: application/json
+Authorization: Basic bWljcm86bWljcm8xMjM0
+
+###
