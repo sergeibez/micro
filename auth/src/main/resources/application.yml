@@ -16,12 +16,11 @@ spring:
     throw-exception-if-no-handler-found: true
     log-resolved-exception: false
 
-  http:
+  servlet:
     multipart:
       max-file-size: 32MB
       max-request-size: 32MB
 
-  # Jackson
   jackson:
     serialization:
       indent_output: true
@@ -39,6 +38,9 @@ spring:
         use_sql_comments: false
         format_sql: true
         show_sql: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
 
   # Datasource
   datasource:
@@ -46,33 +48,20 @@ spring:
     username: micro
     password: micro1234
 
-    tomcat:
-      initial-size: 3
-      max-active: 20
-      min-idle: 3
-      max-idle: 15
-      max-wait: 10000
-      max-age: 60000
-      validation-query: SELECT 1
-      validation-query-timeout: 3
-      validation-interval: 15000
-      test-on-borrow: true
-      test-while-idle: true
-      test-on-return: false
-
-security:
-  oauth2:
-    client:
-      preEstablishedRedirectUri: true
-      useCurrentUri: false
-    resource:
-      filter-order: 3
-      jwt:
-        key-value: |
-          -----BEGIN PUBLIC KEY-----
-          MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAL1Ff5N8Yj8qwf33oIKc82VUpvHfemXD
-          /aCRQo572CsRxeiYFCPd4UrTjPrKeID19SUK2Gt0SII7BqDw8yZ8oMcCAwEAAQ==
-          -----END PUBLIC KEY-----
+  security:
+    oauth2:
+      client:
+        preEstablishedRedirectUri: true
+        useCurrentUri: false
+        provider:
+      resource:
+        filter-order: 3
+        jwt:
+          key-value: |
+            -----BEGIN PUBLIC KEY-----
+            MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAL1Ff5N8Yj8qwf33oIKc82VUpvHfemXD
+            /aCRQo572CsRxeiYFCPd4UrTjPrKeID19SUK2Gt0SII7BqDw8yZ8oMcCAwEAAQ==
+            -----END PUBLIC KEY-----
 ---
 spring:
   profiles: test
