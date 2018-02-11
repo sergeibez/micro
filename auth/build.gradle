@@ -12,15 +12,15 @@ apply plugin: 'org.asciidoctor.gradle.asciidoctor'
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        //mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 
 dependencies {
     // Spring cloud
-    compile("org.springframework.cloud:spring-cloud-starter-oauth2")
-    compile("org.springframework.cloud:spring-cloud-starter-security")
-    compile("org.springframework.cloud:spring-cloud-starter-eureka")
+//    compile("org.springframework.cloud:spring-cloud-starter-oauth2")
+//    compile("org.springframework.cloud:spring-cloud-starter-security")
+//    compile("org.springframework.cloud:spring-cloud-starter-eureka:2.0.0.M2")
 
     // Spring boot
     compile("org.springframework.boot:spring-boot-starter-web")
@@ -28,8 +28,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-cache")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-validation")
-	compile("org.springframework.boot:spring-boot-starter-actuator")
-    compile("org.springframework.boot:spring-boot-actuator-docs")
+	//compile("org.springframework.boot:spring-boot-starter-actuator")
+    //compile("org.springframework.boot:spring-boot-actuator-docs")
+    compile "org.springframework.security.oauth:spring-security-oauth2:2.2.1.RELEASE"
+    compile "org.springframework.security:spring-security-jwt:1.0.9.RELEASE"
 
     //runtime("org.springframework.boot:spring-boot-devtools")
     compileOnly("org.springframework.boot:spring-boot-configuration-processor")
@@ -43,9 +45,9 @@ dependencies {
     compile("org.apache.commons:commons-lang3")
 
     // Test
-    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.2")
-    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.2")
-    testCompile("org.junit.platform:junit-platform-runner:1.0.2")
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junit5Version}")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:${junit5Version}")
+    testCompile("org.junit.platform:junit-platform-runner:${junit5RunnerVersion}")
     
 	testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
