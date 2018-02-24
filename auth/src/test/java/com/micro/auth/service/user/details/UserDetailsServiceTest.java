@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +39,7 @@ class UserDetailsServiceTest {
         UserRole staff = UserRole.builder().name("ROLE_STAFF").build();
         UserRole admin = UserRole.builder().name("ROLE_ADMIN").parent(staff).build();
 
-        List<UserRole> roles = Arrays.asList(staff, admin);
+        List<UserRole> roles = List.of(staff, admin);
 
         UserGroup group = UserGroup.builder()
                 .id(1L)
