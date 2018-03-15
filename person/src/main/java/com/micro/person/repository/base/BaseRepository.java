@@ -12,5 +12,4 @@ import java.util.Optional;
  */
 @NoRepositoryBean
 public interface BaseRepository<Entity> extends JpaRepository<Entity, Long> {
-    Optional<Entity> findById(Long id);
 }
