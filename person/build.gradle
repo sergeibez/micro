@@ -10,30 +10,28 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.liquibase.gradle'
 apply plugin: 'org.asciidoctor.gradle.asciidoctor'
 
+apply plugin: 'propdeps'
+apply plugin: 'propdeps-idea'
+
 dependencyManagement {
     imports {
-//        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 
 dependencies {
     // Spring cloud
-//    compile("org.springframework.cloud:spring-cloud-starter-oauth2")
-//    compile("org.springframework.cloud:spring-cloud-starter-security")
-//    compile("org.springframework.cloud:spring-cloud-starter-config")
-//    compile("org.springframework.cloud:spring-cloud-starter-eureka:2.0.0.M2")
+    compile("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+    compile("org.springframework.cloud:spring-cloud-starter-oauth2")
+    compile("org.springframework.cloud:spring-cloud-starter-config")
 
     // Spring boot
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-security")
-    compile("org.springframework.boot:spring-boot-starter-cache")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-cache")
     compile("org.springframework.boot:spring-boot-starter-validation")
-    //compile("org.springframework.boot:spring-boot-starter-actuator")
-    //compile("org.springframework.boot:spring-boot-actuator-docs")
 
-    //runtime("org.springframework.boot:spring-boot-devtools")
-    compileOnly("org.springframework.boot:spring-boot-configuration-processor")
+    optional("org.springframework.boot:spring-boot-configuration-processor")
 
     // Database
     compile("org.liquibase:liquibase-core")
@@ -41,6 +39,12 @@ dependencies {
 
     // Utils
     compile("org.apache.commons:commons-lang3")
+
+    // Annotations for Java 9
+    compile "javax.xml.bind:jaxb-api:${jaxbVersion}"
+    compile "com.sun.xml.bind:jaxb-core:${jaxbVersion}"
+    compile "com.sun.xml.bind:jaxb-impl:${jaxbVersion}"
+    compile "javax.activation:activation:1.1.1"
 
     // Test
     testCompile("org.junit.jupiter:junit-jupiter-api:${junit5Version}")
